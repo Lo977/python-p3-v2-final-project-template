@@ -18,3 +18,10 @@ class Agent:
     def name(self,name):
         if isinstance(name,str) and len(name) > 0:
             self._name = name
+    @property
+    def email(self):
+        return self._email
+    @email.setter
+    def email(self,email):
+        if len(email) > 0:
+            self._email = email
