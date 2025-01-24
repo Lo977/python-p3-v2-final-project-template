@@ -1,4 +1,4 @@
-# lib/models/department.py
+
 from __init__ import CURSOR, CONN
 import re
 
@@ -55,7 +55,32 @@ class Agent:
             self._dre_num = dre_num
         else:
             raise ValueError("Invalid Dre, Numbers!!!")
-agent1 = Agent("Rakesh","rakesh@emal.com","444-423-2345","123445")
-agent1.dre_num = "00000000"
-# 
-print(agent1.dre_num)
+        
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABLE IF NOT EXISTS agents (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            email TEXT.
+            phone TEXT,
+            dre_num INTEGER)
+        """   
+        CURSOR.execute(sql)
+        CONN.commit()
+        
+    @classmethod
+    def drop_table(cls):
+        sql = """
+            DROP TABLE IF EXISTS agents
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+
+
+
+# agent1 = Agent("Rakesh","rakesh@emal.com","444-423-2345","123445")
+# agent1.dre_num = "00000000"
+# # 
+# print(agent1.dre_num)
