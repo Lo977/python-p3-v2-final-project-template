@@ -1,4 +1,5 @@
 from models.__init__ import CONN,CURSOR
+import re
 
 
 
@@ -24,7 +25,8 @@ class Agent:
         return self._email
     @email.setter
     def email(self,email):
-        if len(email) > 0:
+        email_re = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+        if re.match(email_re,email) and len(email) > 0:
             self._email = email
     
     @property

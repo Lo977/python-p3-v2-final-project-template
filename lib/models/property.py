@@ -12,3 +12,10 @@ class Property:
         self.description = description
         self.agent = agent
         Property.all.append(self)
+    @property
+    def address(self):
+        return self._address
+    @address.setter
+    def address(self,address):
+        if isinstance(address,str) and len(address) > 5:
+            self._address = address
