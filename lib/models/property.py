@@ -1,10 +1,10 @@
-from __init__ import CURSOR,CONN
-from agent import Agent
+from models.__init__ import CURSOR,CONN
+from models.agent import Agent
 import re
 
 
 class Property:
-    all =[]
+    all ={}
     def __init__(self, address,price,size,bedroom,description,agent_id,id=None):
         self.id = id
         self.address = address
@@ -13,7 +13,7 @@ class Property:
         self.bedroom = bedroom
         self.description = description
         self.agent_id = agent_id
-        Property.all.append(self)
+        # Property.all.append(self)
 # , price, size, bedroom, description, agent
     def __repr__(self): 
         return f"(<Address : {self.address} \n Price : ${self.price}\n Size: {self.size} SQ FT\n Bedroom: {self.bedroom}\n Description : {self.description}>)"
@@ -84,7 +84,7 @@ class Property:
             price INTEGER,
             size INTEGER,
             bedroom INTEGER,
-            description TEXT
+            description TEXT,
             agent_id INTEGER,
             FOREIGN KEY(agent_id)REFERENCES agents(id))
         """
@@ -93,7 +93,7 @@ class Property:
     @classmethod
     def drop_table(cls):
         sql = """
-            DROP TABLE IF EXITS properties
+            DROP TABLE IF EXISTS properties
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -102,4 +102,4 @@ class Property:
 
 
 # property1 = Property("123 Market St, san francisco, CA 12344",2353535,2000,5,"beutifull stunnig.")
-# print(property1)
+# print(Property.all)
