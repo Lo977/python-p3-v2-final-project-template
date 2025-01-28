@@ -12,38 +12,42 @@ from helpers import (
 
 def main_menu():
     print("Welcome to the Real Estate Management CLI!")
+    print("--------------------------------------------")
     print("Plase select an option:")
+    print("-------------------------")
     print("1. Manage Agents")
     print("2. Manage Properties")
     print("0. Exit")
 
 def agent_menu():
     print("\n-- Manage Agents --")
-    print("1. List All Agents")
-    print("2. Find Agent by ID")
-    print("3. Find Agent By Name")
-    print("4. Create Agent")
-    print("5. Update Agent")    
-    print("6. Delete Agent")
+    # print("1. List All Agents")
+    # print("2. Find Agent by ID")
+    # print("3. Find Agent By Name")
+    # print("4. Create Agent")
+    # print("5. Update Agent")    
+    # print("6. Delete Agent")
     print("0. Back to Main Menu")
 
 def manage_agent():
     while True:
         agent_menu()
+        list_agents()
+       
         choice = input("> ")
 
         if choice == "1":
-            list_agents()
-        elif choice == "2":
-            find_agent_by_id()
-        elif choice == "3":
-            find_by_name()
-        elif choice == "4":
-            create_agent()
-        elif choice == "5":
-            update_agent()
-        elif choice == "6":
-            delete_agent()
+            pass
+        # elif choice == "2":
+        #     find_agent_by_id()
+        # elif choice == "3":
+        #     find_by_name()
+        # elif choice == "4":
+        #     create_agent()
+        # elif choice == "5":
+        #     update_agent()
+        # elif choice == "6":
+        #     delete_agent()
         elif choice == "0":
             run_cli()
         else:

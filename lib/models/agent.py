@@ -14,8 +14,8 @@ class Agent:
         self.phone = phone
         self.dre_num = dre_num
         
-    def __repr__(self):
-        return f"<Agent {self.id} Name: {self.name} Email: {self.email} Phone: {self.phone} Dre_num: {self.dre_num}>"
+    # def __repr__(self):
+        # return f"<Agent {self.id} Name: {self.name} Email: {self.email} Phone: {self.phone} Dre_num: {self.dre_num}>"
     
     @property
     def name(self):

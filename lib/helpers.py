@@ -21,10 +21,28 @@ def create_agent():
     except Exception as e:
         print("Error creating Agent:",e)
 
+# def list_agents():
+#     agents = Agent.get_all()
+#     for agent in agents:
+#         print(f"{agent.id}.{agent.name}")
 def list_agents():
     agents = Agent.get_all()
-    for agent in agents:
-        print(agent)
+    if not agents:
+        print("No agents found!")
+        return
+    else:
+        for index,agent in enumerate(agents,start=1):
+            print(f"{index}.{agent.name}")
+    try:
+        selected_inex = int(input("Enter the number of the agent you want to select:"))
+        if 1 <= selected_inex <= len(agents):
+            selected_agent = agents[selected_inex - 1]   
+            print(f"name: {selected_agent.name}, email: {selected_agent.email} phone: {selected_agent.phone} Dre #:{selected_agent.dre_num}")
+        else:
+            print("Invalid index! Please enter a valid number from the list.")
+    except ValueError:
+        print("Please enter a valid number.")
+
         
 def find_agent_by_id():
     id_ = input("Enter Agent's ID : ")
