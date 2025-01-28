@@ -44,20 +44,28 @@ def update_agent():
     id_ = input("Enter Agent's ID : ")
     if agent := Agent.find_by_id(id_):
         try:
-            name = input("Enter Agent's new name: ")
-            if name:
+            name = input("Enter new name (or press Enter keep the current value):")
+            name = name if name else agent.name
+
+            email = input("Enter new email (or press Enter keep the current value):")
+            email = email if email else agent.email
+
+            phone = input("Enter new phone (or press Enter keep the current value):")
+            phone = phone if phone else agent.phone
+
+            dre_num = input("Enter new DRE# (or press Enter keep the current value):")
+            dre_num =  int(dre_num) if dre_num else agent.dre_num
+
+            confirmation = input(f"Are you sure you want to apply these changes? (Y/N):")
+            if confirmation.lower() == "y":
                 agent.name = name
-            email = input("Enter Agent's new email :")
-            if email:
                 agent.email = email
-            phone = input("Enter Agen's new phone # :")
-            if phone:
                 agent.phone = phone
-            dre_num = (input("Enter Agent's DRE # :"))
-            if dre_num:
-                agent.dre_num = int(dre_num)
-            agent.update()  
-            print(f" Success : {agent}")
+                agent.dre_num = dre_num
+                agent.update()  
+                print(f" Agent {id_} updated successfully.")
+            else:
+                print("Update canceled.")
         except Exception as e:
             print(f"Error Updating Agent",{e})
     else:
