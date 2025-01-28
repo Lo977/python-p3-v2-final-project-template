@@ -66,7 +66,11 @@ def update_agent():
 def delete_agent():
     id_ = input("Enter Agent's ID:")
     if agent := Agent.find_by_id(id_):
-        agent.delete()
-        print(f" Agent {id_} Deleted:")
+        confirmation = input(f"Are  you sure you want to delet Agent {id_} ({agent.name})? (Y/N): ")
+        if confirmation.lower() =="y":
+            agent.delete()
+            print(f" Agent's {id_} deleted Successfully")
+        else:
+            print("Deletaion canceled.")
     else:
         print(f"Agent's id:{id_} not found!")
