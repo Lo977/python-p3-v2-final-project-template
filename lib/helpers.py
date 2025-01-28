@@ -35,6 +35,7 @@ def find_agent_by_id():
 
 def find_by_name():
     name = input("Enter Agent's Name: ")
+    name = name.title()
     if agent:= Agent.find_by_name(name):
         print(agent)
     else:
