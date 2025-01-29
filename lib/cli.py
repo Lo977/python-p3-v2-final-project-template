@@ -7,51 +7,57 @@ from helpers import (
     find_agent_by_id,
     find_by_name,
     update_agent,
-    delete_agent
+    delete_agent,
+    agent_menu
+
 )
 
 def main_menu():
-    print("Welcome to the Real Estate Management CLI!")
-    print("--------------------------------------------")
-    print("Plase select an option:")
+    print("\n Welcome to the Real Estate Management CLI!")
+   
+    print("\n--- Main Menu ---")
     print("-------------------------")
     print("1. Manage Agents")
     print("2. Manage Properties")
     print("0. Exit")
 
-def agent_menu():
-    print("\n-- Manage Agents --")
-    # print("1. List All Agents")
+def agent_management_menu():
+    print("\n-- Agents Management --\n")
+    print("1. List All Agents")
     # print("2. Find Agent by ID")
-    # print("3. Find Agent By Name")
-    # print("4. Create Agent")
+    print("2. Find Agent By Name")
     # print("5. Update Agent")    
     # print("6. Delete Agent")
+    print("3. Add new Agent")
     print("0. Back to Main Menu")
 
-def manage_agent():
-    while True:
-        agent_menu()
-        list_agents()
-       
-        choice = input("> ")
+# def agent_profile_menu():
+#     print("Type U or u tp Update Agent's profile.")
+#     print("Type D or d to Delete Agent's profile.")
 
+def manage_agent():
+    choice = ""
+    while choice !="0":
+
+        agent_management_menu()
+        choice = input("> ")
         if choice == "1":
-            pass
-        # elif choice == "2":
-        #     find_agent_by_id()
-        # elif choice == "3":
-        #     find_by_name()
+            list_agents()
+        elif choice == "2":
+            find_by_name()
+        elif choice == "3":
+            create_agent()
         # elif choice == "4":
-        #     create_agent()
-        # elif choice == "5":
         #     update_agent()
         # elif choice == "6":
         #     delete_agent()
+        # elif choice == "7":
+            # create_agent()
         elif choice == "0":
-            run_cli()
+          print("Exitting Manage Agents...")
         else:
-            print("Invalid option! Please try again.")
+            print("Invalid Input!")
+
 
 
 
@@ -88,7 +94,8 @@ def manage_agent():
 #     print("6. Delete Agent")
 
 def run_cli():
-    while True:
+    choice = ""
+    while choice != "0":
         main_menu()
         choice = input("> ")
 
@@ -97,7 +104,7 @@ def run_cli():
         elif choice == "2":
             print("Manage properties functionality is not inplemented yet.")
         elif choice == "0":
-            exit_program()  
+            print("Exitting The Progam...")  
         else:
             print("Invalid choice! Please try again.")
             

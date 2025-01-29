@@ -31,23 +31,55 @@ def list_agents():
         print("No agents found!")
         return
     else:
-        for index,agent in enumerate(agents,start=1):
-            print(f"{index}.{agent.name}")
-    try:
-        selected_inex = int(input("Enter the number of the agent you want to select:"))
-        if 1 <= selected_inex <= len(agents):
-            selected_agent = agents[selected_inex - 1]   
-            print(f"name: {selected_agent.name}, email: {selected_agent.email} phone: {selected_agent.phone} Dre #:{selected_agent.dre_num}")
+        print("\n--- List of Agents ---")
+        for index, agent in enumerate(agents, start=1):
+            print(f"{index}. {agent.name}")
+        
+        selected_index = int(input("\n Enter the number of the agent you want to select (or 0 to go back): "))
+        
+        if 1 <= selected_index <= len(agents):
+            selected_agent = agents[selected_index - 1]
+            agent_menu(selected_agent)
+        elif selected_index == 0:
+            return  # Return to the previous menu (Main Menu or Agent Management Menu)
         else:
-            print("Invalid index! Please enter a valid number from the list.")
-    except ValueError:
-        print("Please enter a valid number.")
+            print("Invalid selection. Returning to agent management menu.")
+            return
 
+def agent_menu(agent):
+    
+    print(f"\n--- Managing Agent: {agent.name} ---")
+    print("1. Update Agent")
+    print("2. Delete Agent")
+    print("3. Add Property for Agent")
+    print("0. Back to Agent Management")
+    
+        # choice = prompt_user("Select an option (1/2/3/4): ", ["1", "2", "3", "4"])
+    choice = ""
+    while choice !="0":
+    
+        choice = input("> ")
+        if choice == "1":
+            pass
+            # update_agent(agent)
+        elif choice == "2":
+            pass
+            # delete_agent(agent)
+        elif choice == "3":
+            pass
+            # add_property_for_agent(agent)
+            pass
+        elif choice == "0":
+            print("Exitting back to previous menu")
+            return  # Go back to the previous menu (Agent Management Menu)
+        else:
+            print("Invalid Input!")
         
 def find_agent_by_id():
     id_ = input("Enter Agent's ID : ")
     if agent:= Agent.find_by_id(id_):
-        print(agent)
+        # breakpoint()
+        print(agent.name)
     else:
         print(f'Agent {id_} not found!')
 

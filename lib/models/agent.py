@@ -15,7 +15,7 @@ class Agent:
         self.dre_num = dre_num
         
     # def __repr__(self):
-        # return f"<Agent {self.id} Name: {self.name} Email: {self.email} Phone: {self.phone} Dre_num: {self.dre_num}>"
+    #     return f"<Agent {self.id} Name: {self.name} Email: {self.email} Phone: {self.phone} Dre_num: {self.dre_num}>"
     
     @property
     def name(self):
@@ -127,7 +127,7 @@ class Agent:
             agent.email = row[2]
             agent.phone = row[3]
             agent.dre_num = row[4]
-            print(agent)
+            # print(agent)
         else:
             agent = cls(row[1],row[2],row[3],row[4])
             agent.id = row[0]
