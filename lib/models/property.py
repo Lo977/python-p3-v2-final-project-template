@@ -21,9 +21,9 @@ class Property:
     @address.setter
     def address(self, address):
         
-        address_regex = r"^\d{1,5}\s[a-zA-Z0-9\s]{1,}\,?\s[a-zA-Z\s]+(?:\s(?:Apt|Suite|Unit)\s?\d{1,5}[A-Za-z]?)?,?\s[a-zA-Z\s]+\,\s[A-Z]{2}\s\d{5}(-\d{4})?$"
+        # address_regex = r"^\d{1,5}\s[a-zA-Z0-9\s]{1,}\,?\s[a-zA-Z\s]+(?:\s(?:Apt|Suite|Unit)\s?\d{1,5}[A-Za-z]?)?,?\s[a-zA-Z\s]+\,\s[A-Z]{2}\s\d{5}(-\d{4})?$"
         
-        if re.match(address_regex, address) and len(address) != 0:
+        if isinstance(address,str) and len(address) != 0:
             self._address = address  
         else:
             raise ValueError("Invalid address format!")
@@ -66,6 +66,16 @@ class Property:
         """
         CURSOR.execute(sql)
         CONN.commit()
+    def save(self):
+        sql ="""
+            INSERT INTO properties (address,price,agent_id)
+            VALUES(?,?,?)
+        """
+        CURSOR.execute(sql,(self.address,self.price,self.agent_id))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
 
     @classmethod
     def instance_from_db(cls, row):
@@ -78,7 +88,7 @@ class Property:
         return property_instance
     
     @classmethod
-    def get_by_agent(cls,agent_id):
+    def get_properties_by_agent(cls,agent_id):
         sql = """
             SELECT *
             FROM properties
@@ -86,6 +96,14 @@ class Property:
         """
         rows = CURSOR.execute(sql,(agent_id,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]
+    def update(self):
+        sql = """
+            UPDATE properties
+            SET address =?, price =?
+            WHERE agent_id =?
+        """
+        CURSOR.execute(sql,(self.address,self.price,self.agent_id))
+        CONN.commit()
 
 
 
