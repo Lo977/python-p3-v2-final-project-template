@@ -29,33 +29,30 @@ def manage_agent():
     choice = ""
     while choice !="0":
 
-        agent_management_menu()
+        print("\n-- Agents Management --\n")
+        print("1. List All Agents")
+        print("2. Find Agent By Name")
+        print("3. Add new Agent")
+        print("0. Back to Main Menu")
         choice = input("> ")
         if choice == "1":
             list_agents()
         elif choice == "2":
-            find_by_name()
+            find_agent_by_name()
         elif choice == "3":
             create_agent()
-        # elif choice == "4":
-        #     update_agent()
-        # elif choice == "6":
-        #     delete_agent()
-        # elif choice == "7":
-            # create_agent()
         elif choice == "0":
-          print("Exitting Manage Agents...")
+            print(" back to Main Menu")
+            return
         else:
             print("Invalid Input!")
-def agent_management_menu():
-    print("\n-- Agents Management --\n")
-    print("1. List All Agents")
-    # print("2. Find Agent by ID")
-    print("2. Find Agent By Name")
-    # print("5. Update Agent")    
-    # print("6. Delete Agent")
-    print("3. Add new Agent")
-    print("0. Back to Main Menu")
+            return
+# def agent_management_menu():
+#     print("\n-- Agents Management --\n")
+#     print("1. List All Agents")
+#     print("2. Find Agent By Name")
+#     print("3. Add new Agent")
+#     print("0. Back to Main Menu")
 
 def list_agents():
     agents = Agent.get_all()
@@ -73,10 +70,10 @@ def list_agents():
             selected_agent = agents[selected_index - 1]
             agent_menu(selected_agent)
         elif selected_index == 0:
-            return  # Return to the previous menu (Main Menu or Agent Management Menu)
+            return   # Return to the previous menu (Main Menu or Agent Management Menu)
         else:
             print("Invalid selection. Returning to agent management menu.")
-            return
+            return 
 
 def agent_menu(agent):
     
@@ -114,13 +111,17 @@ def agent_menu(agent):
 #     else:
 #         print(f'Agent {id_} not found!')
 
-def find_by_name():
-    name = input("Enter Agent's Name: ")
-    name = name.title()
-    if agent:= Agent.find_by_name(name):
-        print(agent)
+def find_agent_by_name():
+    name = input("Enter Agent's Name: ").title()
+    agent = Agent.find_by_name(name)
+
+    if agent:
+        print(f"\n--- Agent Found ---")
+        print(f"(Name: {agent.name}, Email: {agent.email}, Phone: {agent.phone}, DRE: {agent.dre_num})")
+        agent_menu(agent)
     else:
-        print(f"Agent {name} not found!")
+        print(f"Agent '{name} not found. Please chech the name and try again.")
+    
 
 def update_agent(agent):
     print(f"\n--- Updating Agent:{agent.name}")
@@ -152,50 +153,75 @@ def delete_agent(agent):
         manage_agent()
     else:
         print("Deletaion canceled.")
-        manage_agent()
+#         manage_agent()
 def add_property_for_agent(agent):
     print(f"\n--- Adding Property for Agent: {agent.name} ---")
     address = input("Enter Property Address: ")
     price = int(input("Enter Property price: "))
-    property = Property(address,price,agent.id)
-    property.save()
-    print(f"Property added successfully for Agent {agent.name}.")
-    manage_agent()
+    confirmation = input(f"Are you sure you want to add this propety for Agent: {agent.name} (Y/N) ? ").lower()
+    
+    if confirmation =="y":
+        property = Property(address,price,agent.id)
+        property.save()
+        print(f"Property added successfully for Agent {agent.name}.")
+        manage_agent()
+    else:
+        print("Add Property canceled.")
 
 def list_agent_properties(agent):
     properties = Property.get_properties_by_agent(agent.id)
     if not properties:
         print(f"\n{agent.name} has no properties listed.")
-        manage_agent()
+        print("\n-- Going back to previous menu.--")
+        list_agents()
     else:
         print(f"\n--- Properties for agent: {agent.name} ---")
         for idx,property in enumerate(properties,start=1):
-            print(f"{idx}. Address: {property.address}, Price: {property.price}")
+            print(f"{idx}. Address: {property.address}, Price:$ {property.price}.00")
         try:
-            selected_index = int(input("\nSelect a property number to update (or 0 to go back): "))
+            selected_index = int(input("\nSelect a property number to View options (or 0 to go back): "))
             if selected_index == 0:
                list_agents()
             elif 1 <=selected_index<=len(properties):
                 selected_property = properties[selected_index-1]
                 print(f"\n--- Updating Property: {selected_property.address} ---")
-                address = input(f"Enter new address (or press Enter to keep {selected_property.address}): ") or selected_property.address
-                price = input(f"Enter new price (or Enter to keep {selected_property.price})") or selected_property.price
-                confirmation = input(f"Are you sure you want to update this property? (Y/N): ").lower()
-                if confirmation == "y":
-                    selected_property.address = address
-                    selected_property.price = price
-                    selected_property.update()
-                    print(f"Property update successfully.")
-                    list_agent_properties(agent)
-                else:
-                    print("Update canceled.")
-                    list_agent_properties(agent)
+                print("1. Update Property \n2. Delete Property \n0. Back to Agent Properties")
+                choice = ""
+                while choice !="0":
+                    choice = input("> ")
+                    if choice =="1":
+                        address = input(f"Enter new address (or press Enter to keep {selected_property.address}): ") or selected_property.address
+                        price = input(f"Enter new price (or Enter to keep {selected_property.price})") or selected_property.price
+                        confirmation = input(f"Are you sure you want to update this property? (Y/N): ").lower()
+                        if confirmation == "y":
+                            selected_property.address = address
+                            selected_property.price = price
+                            selected_property.update()
+                            print(f"Property updated successfully.")
+                            list_agent_properties(agent)
+                        else:
+                            print("Update canceled.")
+                            list_agent_properties(agent)
+                    elif choice == "2":
+                        confirmation = input(f"Are you sure you want to delete the property at {selected_property.address} (Y/N): ?").lower()
+                        if confirmation == "y":
+                            selected_property.delete()
+                            print(f"Property at {selected_property.address} deleted successfully.")
+                            return
+                        else:
+                            print("Deletaion canceled.")
+                            list_agent_properties(agent)
+                    elif choice == "0":
+                        list_agent_properties(agent)
+                    else:
+                        print("Invalid option.Returning to agent's properties.")
+                        list_agent_properties(agent)        
             else:
                 print("Invalid selection.Returning to agent menu.")
-                manage_agent()
+                # manage_agent()
         except ValueError:
             print("Please enter a valid number.")
-            manage_agent()
+            list_agent_properties(agent)
 
   
     # if agent := Agent.find_by_id(id_):

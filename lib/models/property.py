@@ -96,14 +96,27 @@ class Property:
         """
         rows = CURSOR.execute(sql,(agent_id,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]
+    
     def update(self):
         sql = """
             UPDATE properties
             SET address =?, price =?
-            WHERE agent_id =?
+            WHERE id =?
         """
-        CURSOR.execute(sql,(self.address,self.price,self.agent_id))
+        CURSOR.execute(sql,(self.address,self.price,self.id))
         CONN.commit()
+    def delete(self):
+        """Delete the property from the database."""
+        sql = """
+            DELETE FROM properties
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        if self.id in Property.all:
+            del property.all[self.id]
+            self.id = None
 
 
 

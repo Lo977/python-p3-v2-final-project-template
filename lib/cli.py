@@ -5,9 +5,9 @@ from helpers import (
     exit_program,
     create_agent,
     list_agents,
-    agent_management_menu,
+    # agent_management_menu,
     # find_agent_by_id,
-    find_by_name,
+    # find_by_name,
     update_agent,
     delete_agent,
     agent_menu
