@@ -17,14 +17,11 @@ def create_agent():
     dre_num = int(input("Enter Agent's DRE # : "))
     try:
         agent = Agent.create(name,email,phone,dre_num)
-        print(f"Success:{agent}")
+        print(f"\nSuccess: Name:{agent.name}, Email: {agent.email}, Phone: {agent.phone}, DRE#: {agent.dre_num}")
     except Exception as e:
         print("Error creating Agent:",e)
 
-# def list_agents():
-#     agents = Agent.get_all()
-#     for agent in agents:
-#         print(f"{agent.id}.{agent.name}")
+
 def manage_agent():
     choice = ""
     while choice !="0":
@@ -47,12 +44,7 @@ def manage_agent():
         else:
             print("Invalid Input!")
             return
-# def agent_management_menu():
-#     print("\n-- Agents Management --\n")
-#     print("1. List All Agents")
-#     print("2. Find Agent By Name")
-#     print("3. Add new Agent")
-#     print("0. Back to Main Menu")
+
 
 def list_agents():
     agents = Agent.get_all()
@@ -70,7 +62,7 @@ def list_agents():
             selected_agent = agents[selected_index - 1]
             agent_menu(selected_agent)
         elif selected_index == 0:
-            return   # Return to the previous menu (Main Menu or Agent Management Menu)
+            manage_agent()   
         else:
             print("Invalid selection. Returning to agent management menu.")
             return 
@@ -84,7 +76,7 @@ def agent_menu(agent):
     print("4. List Agent's Properties")
     print("0. Back to Agent Management")
     
-        # choice = prompt_user("Select an option (1/2/3/4): ", ["1", "2", "3", "4"])
+       
     choice = ""
     while choice !="0":
     
@@ -99,17 +91,11 @@ def agent_menu(agent):
             list_agent_properties(agent)
         elif choice == "0":
             print("Exitting back to previous menu")
-            return  # Go back to the previous menu (Agent Management Menu)
+            return  
         else:
             print("Invalid Input!")
         
-# def find_agent_by_id():
-#     id_ = input("Enter Agent's ID : ")
-#     if agent:= Agent.find_by_id(id_):
-#         # breakpoint()
-#         print(agent.name)
-#     else:
-#         print(f'Agent {id_} not found!')
+
 
 def find_agent_by_name():
     name = input("Enter Agent's Name: ").title()
@@ -163,8 +149,8 @@ def add_property_for_agent(agent):
     if confirmation =="y":
         property = Property(address,price,agent.id)
         property.save()
-        print(f"Property added successfully for Agent {agent.name}.")
-        manage_agent()
+        print(f"\nProperty added successfully for Agent {agent.name}.")
+        list_agents()
     else:
         print("Add Property canceled.")
 
@@ -206,8 +192,8 @@ def list_agent_properties(agent):
                         confirmation = input(f"Are you sure you want to delete the property at {selected_property.address} (Y/N): ?").lower()
                         if confirmation == "y":
                             selected_property.delete()
-                            print(f"Property at {selected_property.address} deleted successfully.")
-                            return
+                            print(f"\nProperty at {selected_property.address} deleted successfully.")
+                            list_agents()
                         else:
                             print("Deletaion canceled.")
                             list_agent_properties(agent)
@@ -224,12 +210,4 @@ def list_agent_properties(agent):
             list_agent_properties(agent)
 
   
-    # if agent := Agent.find_by_id(id_):
-    #     confirmation = input(f"Are  you sure you want to delet Agent {id_} ({agent.name})? (Y/N): ")
-    #     if confirmation.lower() =="y":
-    #         agent.delete()
-    #         print(f" Agent's {id_} deleted Successfully")
-    #     else:
-    #         print("Deletaion canceled.")
-    # else:
-    #     print(f"Agent's id:{id_} not found!")
+    

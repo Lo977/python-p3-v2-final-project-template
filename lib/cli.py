@@ -17,7 +17,7 @@ from helpers import (
 def main_menu():
     print("\n Welcome to the Real Estate Management CLI!")
    
-    print("\n--- Main Menu ---")
+    print("--- Main Menu ---")
     print("-------------------------")
     print("1. Manage Agents")
     print("2. Manage Properties")

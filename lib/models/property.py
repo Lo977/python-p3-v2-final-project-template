@@ -115,7 +115,7 @@ class Property:
         CONN.commit()
 
         if self.id in Property.all:
-            del property.all[self.id]
+            del Property.all[self.id]
             self.id = None
 
 
