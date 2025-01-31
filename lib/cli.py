@@ -2,6 +2,7 @@
 
 from helpers import (
     manage_agent,
+    main_menu,
     exit_program,
     create_agent,
     list_agents,
@@ -14,14 +15,14 @@ from helpers import (
 
 )
 
-def main_menu():
-    print("\n Welcome to the Real Estate Management CLI!")
+# def main_menu():
+#     print("\n Welcome to the Real Estate Management CLI!")
    
-    print("--- Main Menu ---")
-    print("-------------------------")
-    print("1. Manage Agents")
-    print("2. Manage Properties")
-    print("0. Exit")
+#     print("--- Main Menu ---")
+#     print("-------------------------")
+#     print("1. Manage Agents")
+#     print("2. Manage Properties")
+#     print("0. Exit")
 
 
 
@@ -78,8 +79,10 @@ def run_cli():
             print("Manage properties functionality is not inplemented yet.")
         elif choice == "0":
             print("Exitting The Progam...")  
+            exit()
         else:
             print("Invalid choice! Please try again.")
+          
             
 if __name__ == "__main__":
     run_cli()
