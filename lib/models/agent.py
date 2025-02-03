@@ -27,3 +27,23 @@ class Agent:
         agent = cls(name, email, phone, dre_num)    
         agent.save()
         return agent
+    
+    @classmethod
+    def instance_from_db(cls,row):
+        agent = cls.all.get(row[0])
+        if agent:
+            agent.name = row[1]
+            agent.email = row[2]
+            agent.phone = row[3]
+            agent.dre_num  = row[4]
+        else:
+            agent = cls(row[1],row[2],row[3],row[4])
+            agent.id = row[0]
+            cls.all[agent.id] = agent
+        return agent
+    @classmethod
+    def get_all(cls):
+        sql = "SELECT * FROM agents"
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+

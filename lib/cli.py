@@ -2,6 +2,8 @@
 
 from helpers import (
     exit_program,
+    create_agent,
+    get_all_agents,
 )
 
 def main_menu():
@@ -11,6 +13,8 @@ def main_menu():
     print("-------------------------")
     print("1. Manage Agents")
     print("0. Exit")
+
+
 def manage_agent():
     choice = ""
     while choice != "0":
@@ -20,20 +24,37 @@ def manage_agent():
         print("3. Add New Agent")
         print("0. Back to Main Menu")
 
-        choice = input("> ")
+        choice = input("> ").strip()
         if choice == "1":
-            # list_agents()
+            list_agents_cli()
             pass
         elif choice == "2":
             pass
             # find_agent_by_name()
         elif choice == "3":
             pass
-            # create_agent()
+            create_agent_cli()
         elif choice != "0":
             print("Invalid Input! Please enter a valid number.")
         # else:
-    print("Exitting back to main menu")       
+    print("Exitting back to main menu")    
+
+def create_agent_cli():
+    name = input("Enter Agent's Name: ").title()
+    email = input("Enter Agent's Email: ").lower()
+    phone = input("Enter Agent's Phone: ")
+    dre_num = int(input("Enter Agent's dre_num: "))   
+
+    agent = create_agent(name,email,phone,dre_num)
+    print(f"✅ Agent {agent.name} created successfully!")
+
+def list_agents_cli():
+    agents = get_all_agents()
+    if not agents:
+        print("\nNo agents found.\n")
+    print(f"\n-- List of Agents --\n")
+    for i,agent in enumerate(agents,start=1):
+        print(f"{i}.{agent.name}")
 
 def run_cli():
     choice = ""
