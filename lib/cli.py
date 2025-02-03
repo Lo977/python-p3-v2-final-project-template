@@ -4,6 +4,7 @@ from helpers import (
     exit_program,
     create_agent,
     get_all_agents,
+    update_agent,
 )
 
 def main_menu():
@@ -78,8 +79,7 @@ def agent_options(agent):
         choice = input("> ").strip()
 
         if choice == "1":
-            # update agent
-            pass
+            update_agent_cli(agent)
         elif choice == "2":
             # delete agent
             pass
@@ -92,6 +92,20 @@ def agent_options(agent):
             pass
         elif choice !="0":
             print("Invalid input. Please try again.")
+
+def update_agent_cli(agent):
+    print(f"\nUpdating Agent: {agent.name}")
+    agent.name = input(f"\nEnte new name ( or press Enter to keep {agent.name}): ").title() or agent.name
+    agent.email = input(f"Enter new email (or press Enter to keep {agent.email})").lower() or agent.email
+    agent.phone = input(f"Enter new phone number (or press Enter to keep {agent.phone})") or agent.phone
+    agent.dre_num = input(f"Enter new DRE # (or press Enter to keep {agent.dre_num}") or agent.dre_num
+
+    confirmation = input(f"Are you sure you want to update this agent: {agent.name} ? (Y/N): ").strip().lower()
+    if confirmation == "y":
+        update_agent(agent)
+        print(f"\n✅ Agent {agent.name} updated successfully.")
+    else:
+         print("\n❌ Agent Update canceled.")
 
 def run_cli():
     choice = ""

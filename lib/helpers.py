@@ -10,3 +10,6 @@ def create_agent(name,email,phone,dre_num):
 
 def get_all_agents():
     return Agent.get_all()
+
+def update_agent(agent):
+    agent.update()

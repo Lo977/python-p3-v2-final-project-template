@@ -14,7 +14,7 @@ class Agent:
         sql = """
             INSERT INTO agents(name, email, phone, dre_num)
             VALUES (?, ?, ?, ?) 
-            """
+         """
         CURSOR.execute(sql,(self.name, self.email, self.phone, self.dre_num))
         CONN.commit()
         
@@ -46,4 +46,14 @@ class Agent:
         sql = "SELECT * FROM agents"
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
+    
+    def update(self):
+        sql = """
+            UPDATE agents 
+            SET name = ?, email = ?, phone = ?, dre_num = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql,(self.name, self.email, self.phone, self.dre_num, self.id))
+        CONN.commit()
+
 
