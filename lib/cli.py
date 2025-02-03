@@ -55,6 +55,43 @@ def list_agents_cli():
     print(f"\n-- List of Agents --\n")
     for i,agent in enumerate(agents,start=1):
         print(f"{i}.{agent.name}")
+    
+    selected_index = int(input("\n-- Enter an agent by number to view details or modify (0 To go back): "))
+    if selected_index == 0:
+        return None
+    elif 1<= selected_index <= len(agents):
+        return agent_options(agents[selected_index - 1])
+    else:
+        print("Invalid selection")
+        return None
+    
+def agent_options(agent):
+    choice = ""
+    while choice !="0":
+        print(f"\n Agent: {agent.name}, Email: {agent.email}, Phone: {agent.phone}, DRE# : {agent.dre_num}")
+        print(f"\n1. Update Agent")
+        print(f"2. Delete Agent")
+        print(f"3. Add Property")
+        print(f"4. List Properties")
+        print(f"0. Back to Previous Menu")
+
+        choice = input("> ").strip()
+
+        if choice == "1":
+            # update agent
+            pass
+        elif choice == "2":
+            # delete agent
+            pass
+            choice = "0"
+        elif choice == "3":
+            # add properties
+            pass
+        elif choice == "4":
+            # list properties
+            pass
+        elif choice !="0":
+            print("Invalid input. Please try again.")
 
 def run_cli():
     choice = ""
