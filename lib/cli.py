@@ -7,6 +7,7 @@ from helpers import (
     update_agent,
     delete_agent,
     find_agent_by_name,
+    add_property,
 )
 
 def main_menu():
@@ -21,7 +22,7 @@ def main_menu():
 def manage_agent():
     choice = ""
     while choice != "0":
-        print("\n-- Agents Management --")
+        print("\n-- Agents Management --\n")
         print("1. List All Agents")
         print("2. Find Agent By Name")
         print("3. Add New Agent")
@@ -96,8 +97,7 @@ def agent_options(agent):
             delete_agent_cli(agent)
             choice = "0"
         elif choice == "3":
-            # add properties
-            pass
+            add_property_cli(agent)
         elif choice == "4":
             # list properties
             pass
@@ -127,6 +127,17 @@ def delete_agent_cli(agent):
         print("\n❌ Canceled.")
         agent_options(agent)
    
+def add_property_cli(agent):
+    print(f"\n-- Adding property for Agent: {agent.name} --\n")
+    address = input("Enter Property Address: ")
+    price = int(input("Enter Property price: "))
+    confirmation = input(f"\nAre ypu sure you want to add this property for Agent: {agent.name}? (Y/N): ")
+    if confirmation =="y":
+        add_property(address,price,agent)
+        print(f"\n✅ Property added successfully.")
+    else:
+        print("\n❌ Property addition canceled.")
+
 
 
 def run_cli():

@@ -1,5 +1,6 @@
 
 from models.agent import Agent
+from models.property import Property
 
 
 def exit_program():
@@ -26,4 +27,7 @@ def find_agent_by_name():
         print(f"\n Name: {agent.name}, Email: {agent.email}, Phone: {agent.phone}, DRE #: {agent.dre_num} ")
     else:
          print(f"❌ Agent '{name}' not found.")
-     
+
+def add_property(address,price,agent):
+    property = Property(address, price, agent.id)   
+    property.save()
