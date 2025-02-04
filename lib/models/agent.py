@@ -55,7 +55,7 @@ class Agent:
         """
         CURSOR.execute(sql,(self.name, self.email, self.phone, self.dre_num, self.id))
         CONN.commit()
-        
+
     def delete(self):
         sql = """
             DELETE FROM agents
@@ -67,3 +67,12 @@ class Agent:
         del type(self).all[self.id]
         self.id = None
 
+    @classmethod
+    def find_by_name(cls,name):
+        sql = """
+            SELECT *
+            FROM agents
+            WHERE name = ?
+        """
+        row = CURSOR.execute(sql,(name,)).fetchone()
+        return cls.instance_from_db(row) if row else None

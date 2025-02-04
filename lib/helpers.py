@@ -16,3 +16,14 @@ def update_agent(agent):
 
 def delete_agent(agent):
     agent.delete()
+
+def find_agent_by_name():
+    name = input(f"Enter Agent's name: ").title()
+    agent = Agent.find_by_name(name)
+
+    if agent:
+        print(f"\n-- Agent found --")
+        print(f"\n Name: {agent.name}, Email: {agent.email}, Phone: {agent.phone}, DRE #: {agent.dre_num} ")
+    else:
+         print(f"❌ Agent '{name}' not found.")
+     

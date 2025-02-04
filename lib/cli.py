@@ -6,6 +6,7 @@ from helpers import (
     get_all_agents,
     update_agent,
     delete_agent,
+    find_agent_by_name,
 )
 
 def main_menu():
@@ -29,12 +30,10 @@ def manage_agent():
         choice = input("> ").strip()
         if choice == "1":
             list_agents_cli()
-            pass
+            
         elif choice == "2":
-            pass
-            # find_agent_by_name()
+            find_agent_by_name()
         elif choice == "3":
-            pass
             create_agent_cli()
         elif choice != "0":
             print("Invalid Input! Please enter a valid number.")
@@ -53,6 +52,14 @@ def create_agent_cli():
         print(f"\n✅ Agent {agent.name} created successfully!")
     else:
          print("\n❌ canceled !!")
+# def find_agent_by_name_cli():
+#     name = input(f"Enter Agent's name: ").title()
+
+#     if name:
+#         find_agent_by_name(name)
+#     else:
+#         print(f"Agent Name: {name } not found!")
+
 
 def list_agents_cli():
     agents = get_all_agents()
