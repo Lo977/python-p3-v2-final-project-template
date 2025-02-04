@@ -5,6 +5,7 @@ from helpers import (
     create_agent,
     get_all_agents,
     update_agent,
+    delete_agent,
 )
 
 def main_menu():
@@ -46,8 +47,12 @@ def create_agent_cli():
     phone = input("Enter Agent's Phone: ")
     dre_num = int(input("Enter Agent's dre_num: "))   
 
-    agent = create_agent(name,email,phone,dre_num)
-    print(f"✅ Agent {agent.name} created successfully!")
+    confirmation = input(f"\nAre you sure you want to create this agent? (Y/N): ").strip().lower()
+    if confirmation == "y":
+        agent = create_agent(name,email,phone,dre_num)
+        print(f"\n✅ Agent {agent.name} created successfully!")
+    else:
+         print("\n❌ canceled !!")
 
 def list_agents_cli():
     agents = get_all_agents()
@@ -81,8 +86,7 @@ def agent_options(agent):
         if choice == "1":
             update_agent_cli(agent)
         elif choice == "2":
-            # delete agent
-            pass
+            delete_agent_cli(agent)
             choice = "0"
         elif choice == "3":
             # add properties
@@ -106,6 +110,17 @@ def update_agent_cli(agent):
         print(f"\n✅ Agent {agent.name} updated successfully.")
     else:
          print("\n❌ Agent Update canceled.")
+
+def delete_agent_cli(agent):
+    confirmation = input(f"\nAre you sure you want to delete Agent: {agent.name}? (Y/N): ").strip().lower()
+    if confirmation == "y":
+        delete_agent(agent)
+        print(f"\n✅ Agent {agent.name} deleted successfully.")
+    else:
+        print("\n❌ Canceled.")
+        agent_options(agent)
+   
+
 
 def run_cli():
     choice = ""

@@ -13,3 +13,6 @@ def get_all_agents():
 
 def update_agent(agent):
     agent.update()
+
+def delete_agent(agent):
+    agent.delete()

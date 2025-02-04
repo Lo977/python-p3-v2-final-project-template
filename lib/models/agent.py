@@ -55,5 +55,15 @@ class Agent:
         """
         CURSOR.execute(sql,(self.name, self.email, self.phone, self.dre_num, self.id))
         CONN.commit()
+        
+    def delete(self):
+        sql = """
+            DELETE FROM agents
+            WHERE id = ?
+        """
+        CURSOR.execute(sql,(self.id,))
+        CONN.commit()
 
+        del type(self).all[self.id]
+        self.id = None
 
