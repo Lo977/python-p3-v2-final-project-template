@@ -31,3 +31,46 @@ def find_agent_by_name():
 def add_property(address,price,agent):
     property = Property(address, price, agent.id)   
     property.save()
+
+def list_properties(agent):
+    properties = Property.get_properties_by_agent(agent.id) 
+    
+    if not properties:
+        print(f"\n-- Agent: {agent.name} has not property listed. --")
+    
+    print(f"\n-- Prperties for Agent: {agent.name}")
+
+    for i,property in enumerate(properties, start=1):
+        print(f"\n{i}. Address: {property.address}, Price: ${property.price}.00")
+
+    while True:
+        try:
+            selected_index = int(input("\n-- Select property number for options (or 0 to go back): "))
+            if selected_index == 0:
+                print("\nNavigating back to previous menu.")
+                return
+            elif 1 <= selected_index <= len(properties):
+                property_options(properties[selected_index-1])
+            else:
+                print("Invalid selection. Try again")
+        except ValueError:
+            print("Please enter a valid number.")
+
+def property_options(property):
+    choice = ""
+    while choice != "0":
+        print(f"\n< Property: {property.address} >\n")
+        print(f"Manage Property\n")
+        print("1. Update Property")
+        print("2. Delete Property")
+        print("0. Back to previous Menu")
+
+        choice = input("> ").strip()    
+        if choice =="1":
+            pass
+        elif choice == "2":
+            pass
+        elif choice != "0":
+            print("\n-- Invalid selection.Try again --")
+    print(f"\n-- Navigating back to previous menu --")
+                    

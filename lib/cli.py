@@ -8,6 +8,7 @@ from helpers import (
     delete_agent,
     find_agent_by_name,
     add_property,
+    list_properties,
 )
 
 def main_menu():
@@ -39,7 +40,7 @@ def manage_agent():
         elif choice != "0":
             print("Invalid Input! Please enter a valid number.")
         # else:
-    print("Exitting back to main menu")    
+    print("\nExitting back to main menu")    
 
 def create_agent_cli():
     name = input("Enter Agent's Name: ").title()
@@ -69,15 +70,18 @@ def list_agents_cli():
     print(f"\n-- List of Agents --\n")
     for i,agent in enumerate(agents,start=1):
         print(f"{i}.{agent.name}")
-    
-    selected_index = int(input("\n-- Enter an agent by number to view details or modify (0 To go back): "))
-    if selected_index == 0:
-        return None
-    elif 1<= selected_index <= len(agents):
-        return agent_options(agents[selected_index - 1])
-    else:
-        print("Invalid selection")
-        return None
+    while True:
+        try:
+            selected_index = int(input("\n-- Enter an agent by number to view details or modify (0 To go back): "))
+            if selected_index == 0:
+                return None
+            elif 1<= selected_index <= len(agents):
+                return agent_options(agents[selected_index - 1])
+            else:
+                print("Invalid selection")
+                return None
+        except ValueError:
+            print("Invaind Selection . Try again")
     
 def agent_options(agent):
     choice = ""
@@ -99,11 +103,11 @@ def agent_options(agent):
         elif choice == "3":
             add_property_cli(agent)
         elif choice == "4":
-            # list properties
+            list_properties(agent)
             pass
         elif choice !="0":
             print("Invalid input. Please try again.")
-
+    print("Navigating back to previous menu.")
 def update_agent_cli(agent):
     print(f"\nUpdating Agent: {agent.name}")
     agent.name = input(f"\nEnte new name ( or press Enter to keep {agent.name}): ").title() or agent.name

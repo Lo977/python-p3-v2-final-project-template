@@ -6,7 +6,7 @@ class Property:
 
     all = {}
 
-    def __init__(self, address, price, agent_id):
+    def __init__(self, address, price, agent_id,id=None):
         self.id = id
         self.address = address
         self.price = price
@@ -31,6 +31,15 @@ class Property:
 
         CURSOR.execute(sql)
         CONN.commit()
+    @classmethod
+    def instance_from_db(cls, row):
+        property_instance = cls(
+            address=row[1],    
+            price=row[2],       
+            agent_id=row[3],   
+            id=row[0]          
+        )
+        return property_instance
 
     def save(self):
         sql = """
@@ -42,3 +51,13 @@ class Property:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
+    @classmethod
+    def get_properties_by_agent(cls,agent_id):
+        sql = """
+            SELECT * 
+            FROM properties
+            WHERE agent_id = ?
+        """
+        rows = CURSOR.execute(sql,(agent_id,)).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
