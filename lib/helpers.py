@@ -67,10 +67,22 @@ def property_options(property):
 
         choice = input("> ").strip()    
         if choice =="1":
-            pass
+            update_property(property)
         elif choice == "2":
             pass
         elif choice != "0":
             print("\n-- Invalid selection.Try again --")
     print(f"\n-- Navigating back to previous menu --")
-                    
+
+def update_property(property):
+    address = input(f"Enter new address (or press Enter to keep {property.address}) ") or property.address
+    price = input(f"Enter new pruce (or press Enter to keep {property.price})") or property.price
+
+    confirmation = input("Are you sure you an to update this property? (Y/N): ")
+    if confirmation == "y":
+        property.address = address
+        property.price = int(price)
+        property.update()
+        print("\n✅ Property updated successfully. ")
+    else:
+        print("\n❌ Property update canceled.")

@@ -61,3 +61,12 @@ class Property:
         """
         rows = CURSOR.execute(sql,(agent_id,)).fetchall()
         return [cls.instance_from_db(row) for row in rows]
+    
+    def update(self):
+        sql = """
+            UPDATE properties
+            SET address = ?, price = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql,(self.address,self.price,self.id))
+        CONN.commit()
