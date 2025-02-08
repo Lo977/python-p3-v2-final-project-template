@@ -67,6 +67,7 @@ def list_agents_cli():
     agents = get_all_agents()
     if not agents:
         print("\nNo agents found.\n")
+        return
     print(f"\n-- List of Agents --\n")
     for i,agent in enumerate(agents,start=1):
         print(f"{i}.{agent.name}")

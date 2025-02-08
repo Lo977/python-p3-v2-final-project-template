@@ -1,14 +1,48 @@
 from models.__init__ import CURSOR,CONN
+from models.property import Property
+
 
 class Agent:
     all = {}
-    def __init__(self, name, email, phone, dre_num):
+    def __init__(self, name, email, phone, dre_num,id=None):
         self.id = id
         self.name = name
         self.email = email
         self.phone = phone
         self.dre_num = dre_num
-        pass
+        
+
+    @property
+    def name(self):
+        return self._name
+    @name.setter
+    def name(self,name):
+        if isinstance(name,str) and len(name) > 0 :
+            self._name = name.title()
+        else:
+            raise ValueError("Name must be non_empty strings ")
+
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABlE IF NOT EXISTS agents (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            email TEXT,
+            phone INTEGER,
+            dre_num INTEGER)
+        """
+
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    @classmethod
+    def drop_table(cls):
+        sql ="DROP TABLE IF EXISTS agents"
+
+        CURSOR.execute(sql)
+        CONN.commit()
+
 
     def save(self):
         sql = """
@@ -76,3 +110,7 @@ class Agent:
         """
         row = CURSOR.execute(sql,(name,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
+    def properties(self):
+       return Property.get_properties_by_agent(self.id)
+

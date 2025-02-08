@@ -33,18 +33,21 @@ def add_property(address,price,agent):
     property.save()
 
 def list_properties(agent):
-    properties = Property.get_properties_by_agent(agent.id) 
-    
+    # breakpoint()
+    # properties = Property.get_properties_by_agent(agent.id) 
+    properties = agent.properties()
     if not properties:
-        print(f"\n-- Agent: {agent.name} has not property listed. --")
+        print(f"\n-- Agent: {agent.name} has no property listed. --")
+        return
     
     print(f"\n-- Prperties for Agent: {agent.name}")
 
     for i,property in enumerate(properties, start=1):
-        print(f"\n{i}. Address: {property.address}, Price: ${property.price}.00")
-
+        print(f"\n{i}. Address: {property.address}, Price: $ {property.price}.00")
+  
     while True:
         try:
+           
             selected_index = int(input("\n-- Select property number for options (or 0 to go back): "))
             if selected_index == 0:
                 print("\nNavigating back to previous menu.")
@@ -69,20 +72,30 @@ def property_options(property):
         if choice =="1":
             update_property(property)
         elif choice == "2":
-            pass
+            delete_property(property)
         elif choice != "0":
             print("\n-- Invalid selection.Try again --")
     print(f"\n-- Navigating back to previous menu --")
 
 def update_property(property):
     address = input(f"Enter new address (or press Enter to keep {property.address}) ") or property.address
-    price = input(f"Enter new pruce (or press Enter to keep {property.price})") or property.price
+    price = input(f"Enter new pruce (or press Enter to keep {property.price})")
 
     confirmation = input("Are you sure you an to update this property? (Y/N): ")
     if confirmation == "y":
         property.address = address
-        property.price = int(price)
+        property.price = int(price) if price else property.price
         property.update()
         print("\n✅ Property updated successfully. ")
     else:
         print("\n❌ Property update canceled.")
+
+def delete_property(property):
+    confirmaion = input(f"\n Are you sure you want to Delete property: {property.address} ? (Y/N): ").lower()
+
+    if confirmaion == "y":
+        property.delete()
+        print("\n✅ Property deleted successfully.")
+        return True
+    else:
+         print("\n❌ Property deletion canceled.")

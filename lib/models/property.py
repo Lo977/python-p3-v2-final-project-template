@@ -1,5 +1,5 @@
 from models.__init__ import CURSOR,CONN
-from models.agent import Agent
+# from models.agent import Agent
 
 
 class Property:
@@ -51,6 +51,7 @@ class Property:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+    
 
     @classmethod
     def get_properties_by_agent(cls,agent_id):
@@ -59,8 +60,12 @@ class Property:
             FROM properties
             WHERE agent_id = ?
         """
-        rows = CURSOR.execute(sql,(agent_id,)).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
+        try:
+            rows = CURSOR.execute(sql,(agent_id,)).fetchall()
+            # breakpoint()
+            return [cls.instance_from_db(row) for row in rows]
+        except Exception as e:
+            print(f"Database error: {e}")
     
     def update(self):
         sql = """
@@ -70,3 +75,15 @@ class Property:
         """
         CURSOR.execute(sql,(self.address,self.price,self.id))
         CONN.commit()
+    
+    def delete(self):
+        sql = """
+            DELETE FROM properties
+            WHERE id = ?
+        """
+        CURSOR.execute(sql,(self.id,)) 
+        CONN.commit()
+
+        if self.id in Property.all:
+            del Property.all[self.id]
+            self.id = None
