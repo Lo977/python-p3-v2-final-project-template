@@ -13,6 +13,9 @@ def reset_database():
     Property.create_table() 
 
 
-reset_database()
+try:
+    reset_database()
+except Exception as e:
+    print(f"Error during database reset: {e}")
 
 ipdb.set_trace()

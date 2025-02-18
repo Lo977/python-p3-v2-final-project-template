@@ -38,7 +38,7 @@ def list_properties(agent):
     properties = agent.properties()
     if not properties:
         print(f"\n-- Agent: {agent.name} has no property listed. --")
-        return
+        return True
     
     print(f"\n-- Prperties for Agent: {agent.name}")
 
@@ -96,6 +96,6 @@ def delete_property(property):
     if confirmaion == "y":
         property.delete()
         print("\n✅ Property deleted successfully.")
-        return True
+        return 
     else:
          print("\n❌ Property deletion canceled.")

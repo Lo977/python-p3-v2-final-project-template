@@ -9,6 +9,26 @@ class Property:
         self.address = address
         self.price = price
         self.agent_id = agent_id
+   
+    @property
+    def address(self):
+        return self._address
+    @address.setter
+    def address(self,address):
+        if isinstance(address,str) and len(address):
+            self._address = address   
+        else:
+            raise ValueError("address must be  non-empty string .")
+    
+    @property
+    def price(self):
+        return self._price
+    @price.setter
+    def price(self,price):
+        if isinstance(price,(int,float)) and price > 0 :
+            self._price = price
+        else:
+            raise ValueError("Price must be in numbers and greater then 0")
 
     @classmethod
     def create_table(cls):
@@ -31,6 +51,8 @@ class Property:
         CONN.commit()
     @classmethod
     def instance_from_db(cls, row):
+        if not row:  # Ensure row exists
+            return None
         property = cls.all.get(row[0])
 
         if property:
@@ -41,9 +63,17 @@ class Property:
             property = cls(row[1],row[2],row[3]) 
             property.id = row[0]
             cls.all[property.id] = property
-            return property
+        return property
 
     def save(self):
+       
+        sql = "SELECT * FROM properties WHERE address = ?"
+        CURSOR.execute(sql,(self.address,))
+        
+        existing_property = CURSOR.fetchone()
+        if existing_property:
+            raise ValueError("\n❌ A property with this address already exists.")
+        
         sql = """
             INSERT INTO properties (address,price,agent_id)
             VALUES(?, ?, ?)

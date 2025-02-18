@@ -81,8 +81,8 @@ def list_agents_cli():
             else:
                 print("Invalid selection")
                 return None
-        except ValueError:
-            print("Invaind Selection . Try again")
+        except ValueError as e:
+            print(e)
     
 def agent_options(agent):
     choice = ""
@@ -105,7 +105,6 @@ def agent_options(agent):
             add_property_cli(agent)
         elif choice == "4":
             list_properties(agent)
-            pass
         elif choice !="0":
             print("Invalid input. Please try again.")
     print("Navigating back to previous menu.")
@@ -136,8 +135,8 @@ def add_property_cli(agent):
     print(f"\n-- Adding property for Agent: {agent.name} --\n")
     address = input("Enter Property Address: ")
     price = int(input("Enter Property price: "))
-    confirmation = input(f"\nAre ypu sure you want to add this property for Agent: {agent.name}? (Y/N): ")
-    if confirmation =="y":
+    confirmation = input(f"\nAre ypu sure you want to add this property for Agent: {agent.name}? (Y/N): ").strip().lower()
+    if confirmation == "y":
         add_property(address,price,agent)
         print(f"\n✅ Property added successfully.")
     else:
