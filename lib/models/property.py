@@ -51,7 +51,7 @@ class Property:
         CONN.commit()
     @classmethod
     def instance_from_db(cls, row):
-        if not row:  # Ensure row exists
+        if not row:
             return None
         property = cls.all.get(row[0])
 
@@ -68,9 +68,7 @@ class Property:
     def save(self):
        
         sql = "SELECT * FROM properties WHERE address = ?"
-        CURSOR.execute(sql,(self.address,))
-        
-        existing_property = CURSOR.fetchone()
+        existing_property = CURSOR.execute(sql,(self.address,)).fetchone()
         if existing_property:
             raise ValueError("\n❌ A property with this address already exists.")
         
@@ -83,6 +81,7 @@ class Property:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+     
     
     def update(self):
         sql = """

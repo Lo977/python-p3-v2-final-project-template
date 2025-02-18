@@ -33,8 +33,6 @@ def add_property(address,price,agent):
     property.save()
 
 def list_properties(agent):
-    # breakpoint()
-    # properties = Property.get_properties_by_agent(agent.id) 
     properties = agent.properties()
     if not properties:
         print(f"\n-- Agent: {agent.name} has no property listed. --")

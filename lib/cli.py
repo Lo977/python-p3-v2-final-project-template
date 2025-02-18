@@ -39,7 +39,6 @@ def manage_agent():
             create_agent_cli()
         elif choice != "0":
             print("Invalid Input! Please enter a valid number.")
-        # else:
     print("\nExitting back to main menu")    
 
 def create_agent_cli():
@@ -51,16 +50,10 @@ def create_agent_cli():
     confirmation = input(f"\nAre you sure you want to create this agent? (Y/N): ").strip().lower()
     if confirmation == "y":
         agent = create_agent(name,email,phone,dre_num)
-        print(f"\n✅ Agent {agent.name} created successfully!")
+        if agent:
+            print(f"\n✅ Agent {agent.name} created successfully!")
     else:
          print("\n❌ canceled !!")
-# def find_agent_by_name_cli():
-#     name = input(f"Enter Agent's name: ").title()
-
-#     if name:
-#         find_agent_by_name(name)
-#     else:
-#         print(f"Agent Name: {name } not found!")
 
 
 def list_agents_cli():
@@ -155,9 +148,6 @@ def run_cli():
             pass
         elif choice == "2":
             print("Manage properties functionality is not inplemented yet.")
-        # elif choice == "0":
-        #     print("Exitting The Progam...")  
-        #     exit_program()
         elif choice !="0":
             print("Invalid choice! Please try again.")
     print("Exitting The Progam...\n Good Bye!")  

@@ -1,5 +1,4 @@
 from models.__init__ import CURSOR,CONN
-# from models.property import Property
 
 
 class Agent:
@@ -45,6 +44,13 @@ class Agent:
 
 
     def save(self):
+
+        sql = "SELECT * FROM agents WHERE dre_num = ?"
+        existing_agent = CURSOR.execute(sql,(self.dre_num,)).fetchone()
+        if existing_agent:
+            print("\n❌ A Agemt with this DRE number already exists.") 
+            return None
+        
         sql = """
             INSERT INTO agents(name, email, phone, dre_num)
             VALUES (?, ?, ?, ?) 
@@ -54,16 +60,22 @@ class Agent:
         
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+        return self
 
 
     @classmethod
     def create(cls, name, email, phone, dre_num):
-        agent = cls(name, email, phone, dre_num)    
-        agent.save()
-        return agent
+        try:
+            agent = cls(name, email, phone, dre_num)    
+            return agent.save()
+        except ValueError as e:
+            print(e)
+         
     
     @classmethod
     def instance_from_db(cls,row):
+        if not row:
+            return None
         agent = cls.all.get(row[0])
         if agent:
             agent.name = row[1]
@@ -112,7 +124,6 @@ class Agent:
         return cls.instance_from_db(row) if row else None
     
     def properties(self):
-    #    return Property.get_properties_by_agent(self.id)
         from models.property import Property
         sql = """
             SELECT * FROM properties
