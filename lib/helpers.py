@@ -62,7 +62,7 @@ def list_properties(agent):
 def property_options(property):
     choice = ""
     while choice != "0":
-        print(f"\n< Property: {property.address} >\n")
+        print(f"\n Property: {property.address} \n")
         print(f"Manage Property\n")
         print("1. Update Property")
         print("2. Delete Property")
@@ -79,7 +79,7 @@ def property_options(property):
 
 def update_property(property):
     address = input(f"Enter new address (or press Enter to keep {property.address}) ") or property.address
-    price = input(f"Enter new pruce (or press Enter to keep {property.price})")
+    price = input(f"Enter new price (or press Enter to keep {property.price})")
 
     confirmation = input("Are you sure you an to update this property? (Y/N): ")
     if confirmation == "y":

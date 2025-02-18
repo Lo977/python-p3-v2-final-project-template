@@ -1,5 +1,5 @@
 from models.__init__ import CURSOR,CONN
-from models.property import Property
+# from models.property import Property
 
 
 class Agent:
@@ -112,5 +112,13 @@ class Agent:
         return cls.instance_from_db(row) if row else None
     
     def properties(self):
-       return Property.get_properties_by_agent(self.id)
+    #    return Property.get_properties_by_agent(self.id)
+        from models.property import Property
+        sql = """
+            SELECT * FROM properties
+            WHERE agent_id = ?
+            """
+        rows = CURSOR.execute(sql,(self.id,)).fetchall()
+        return [Property.instance_from_db(row) for row in rows]
+
 

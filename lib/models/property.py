@@ -1,6 +1,4 @@
 from models.__init__ import CURSOR,CONN
-# from models.agent import Agent
-
 
 class Property:
 
@@ -33,13 +31,17 @@ class Property:
         CONN.commit()
     @classmethod
     def instance_from_db(cls, row):
-        property_instance = cls(
-            address=row[1],    
-            price=row[2],       
-            agent_id=row[3],   
-            id=row[0]          
-        )
-        return property_instance
+        property = cls.all.get(row[0])
+
+        if property:
+            property.address = row[1]
+            property.price = row[2]
+            property.agent_id = row[3]
+        else:
+            property = cls(row[1],row[2],row[3]) 
+            property.id = row[0]
+            cls.all[property.id] = property
+            return property
 
     def save(self):
         sql = """
@@ -51,21 +53,6 @@ class Property:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
-    
-
-    @classmethod
-    def get_properties_by_agent(cls,agent_id):
-        sql = """
-            SELECT * 
-            FROM properties
-            WHERE agent_id = ?
-        """
-        try:
-            rows = CURSOR.execute(sql,(agent_id,)).fetchall()
-            # breakpoint()
-            return [cls.instance_from_db(row) for row in rows]
-        except Exception as e:
-            print(f"Database error: {e}")
     
     def update(self):
         sql = """
