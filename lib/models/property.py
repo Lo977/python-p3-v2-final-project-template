@@ -84,6 +84,10 @@ class Property:
      
     
     def update(self):
+        sql = "SELECT * FROM properties WHERE address = ?"
+        existing_property = CURSOR.execute(sql,(self.address,)).fetchone()
+        if existing_property:
+            raise ValueError("\n❌ A property with this address already exists.")
         sql = """
             UPDATE properties
             SET address = ?, price = ?

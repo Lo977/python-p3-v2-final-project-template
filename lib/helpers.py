@@ -54,8 +54,8 @@ def list_properties(agent):
                 property_options(properties[selected_index-1])
             else:
                 print("Invalid selection. Try again")
-        except ValueError:
-            print("Please enter a valid number.")
+        except Exception as e :
+            print(e)
 
 def property_options(property):
     choice = ""
