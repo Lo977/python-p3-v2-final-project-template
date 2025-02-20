@@ -27,7 +27,7 @@ Welcome to the Agent and Properties Management project! This Python based applic
 
 This project is built as part of my Flatiron Phase-3 coursework to solidify my understanding of:
 
-- Python OOP (Classes, Objects, Inheritance, Methods)
+- Python OOP (Classes, Objects, Attributes, Methods)
 - SQLite Database (Data Persistence, Queries, CRUD Operations)
 - CLI Applications (User Interaction via Terminal)
 
@@ -76,81 +76,6 @@ Enter agent's email: John@mail.com
 Enter agent's phone: 123-534-3432
 Enter agent's dre_num: 234423
 Agent John Doe added successfully!
-
-Note: The directory also includes two files named `CONTRIBUTING.md` and
-`LICENSE.md` that are specific to Flatiron's curriculum. You can disregard or
-delete the files if you want.
-
----
-
-## Generating Your Environment
-
-You might have noticed in the file structure- there's already a Pipfile!
-
-Install any additional dependencies you know you'll need for your project by
-adding them to the `Pipfile`. Then run the commands:
-
-```console
-pipenv install
-pipenv shell
-```
-
----
-
-## Generating Your CLI
-
-A CLI is, simply put, an interactive script and prompts the user and performs
-operations based on user input.
-
-The project template has a sample CLI in `lib/cli.py` that looks like this:
-
-```py
-# lib/cli.py
-
-from helpers import (
-    exit_program,
-    helper_1
-)
-
-
-def main():
-    while True:
-        menu()
-        choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
-            helper_1()
-        else:
-            print("Invalid choice")
-
-
-def menu():
-    print("Please select an option:")
-    print("0. Exit the program")
-    print("1. Some useful function")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-The helper functions are located in `lib/helpers.py`:
-
-```py
-# lib/helpers.py
-
-def helper_1():
-    print("Performing useful function#1.")
-
-
-def exit_program():
-    print("Goodbye!")
-    exit()
-```
-
-You can run this CLI with `python lib/cli.py`. The template CLI will ask for input, do
-some work, and accomplish some sort of task.
 
 ## Conclusion
 

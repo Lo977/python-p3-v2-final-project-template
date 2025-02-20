@@ -94,6 +94,11 @@ class Agent:
         return [cls.instance_from_db(row) for row in rows]
     
     def update(self):
+        sql = "SELECT * FROM agents WHERE dre_num = ?"
+        existing_agent = CURSOR.execute(sql,(self.dre_num,)).fetchone()
+        if existing_agent:
+            print("\n❌ A Agemt with this DRE number already exists.") 
+            return None
         sql = """
             UPDATE agents 
             SET name = ?, email = ?, phone = ?, dre_num = ?
